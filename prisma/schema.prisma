@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum InvestmentEventType {
+  BUY
+  SELL
+}
+
+enum AccountEventType {
+  WITHDRAW
+  DEPOSIT
+}
+
+model Account {
+  id               Int                @id @default(autoincrement())
+  email            String             @unique
+  fullName         String
+  birthDate        DateTime
+  hashedPassword   String
+  balance          Float              @default(0.00)
+  investments      Investment[]
+  investmentEvents InvestmentEvents[]
+  accountEvents    AccountEvents[]
+}
+
+model Asset {
+  id                Int                @id @default(autoincrement())
+  symbol            String
+  companyName       String
+  price             Float
+  exchange          String
+  exchangeShortName String
+  amount            Int
+  investments       Investment[]
+  investmentEvents  InvestmentEvents[]
+}
+
+model Investment {
+  account   Account @relation(fields: [accountId], references: [id])
+  accountId Int
+  asset     Asset   @relation(fields: [assetId], references: [id])
+  assetId   Int
+  amount    Int
+
+  @@id([accountId, assetId])
+}
+
+model InvestmentEvents {
+  id        Int                 @id @default(autoincrement())
+  account   Account             @relation(fields: [accountId], references: [id])
+  accountId Int
+  asset     Asset               @relation(fields: [assetId], references: [id])
+  assetId   Int
+  price     Float
+  amount    Int
+  type      InvestmentEventType
+  createdAt DateTime            @default(now())
+}
+
+model AccountEvents {
+  id        Int              @id @default(autoincrement())
+  value     Float
+  type      AccountEventType
+  createdAt DateTime         @default(now())
+  account   Account          @relation(fields: [accountId], references: [id])
+  accountId Int
+}
