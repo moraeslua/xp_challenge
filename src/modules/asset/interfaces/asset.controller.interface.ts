@@ -1,5 +1,9 @@
+export interface IGetByAssetRequest {
+  id: number;
+}
+
 export interface IGetByAssetResponse {
-  assetId: number;
+  id: number;
   amount: number;
   price: number;
   symbol: string;
