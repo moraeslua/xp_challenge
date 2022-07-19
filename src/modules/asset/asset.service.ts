@@ -1,19 +1,35 @@
+import { HttpStatus } from 'src/helpers';
 import { HttpException } from 'src/helpers/http-exception';
-import { IAssetRepository } from './interfaces/repository/get-by-asset.data';
-import { IGetByAssetInput } from './interfaces/service/get-by-asset.input';
+import { IAssetRepository } from './interfaces/asset.repository.interface';
+import {
+  IAssetService,
+  IGetAllByAccountInput,
+  IGetAllByAccountOutput,
+  IGetByAssetInput,
+  IGetByAssetOutput,
+} from './interfaces/asset.service.interface';
 import { AssetValidator } from './validator/asset-validator';
 
-export class AssetService {
+export class AssetService implements IAssetService {
   constructor(private assetRepository: IAssetRepository) {}
 
-  async findByClient() {
-    //
+  public async getById({ id }: IGetByAssetInput): Promise<IGetByAssetOutput> {
+    await AssetValidator.getByAsset({ id });
+    const asset = await this.assetRepository.findById({ id });
+
+    if (!asset) {
+      throw new HttpException('Asset not found', HttpStatus.NOT_FOUND);
+    }
+
+    return asset;
   }
 
-  async findById({ assetId }: IGetByAssetInput) {
-    await AssetValidator.getByAsset({ assetId });
+  public async getAllByAccount({
+    accountId,
+  }: IGetAllByAccountInput): Promise<IGetAllByAccountOutput> {
+    await AssetValidator.getByAccount({ accountId });
 
-    const asset = await this.assetRepository.findByAsset({ assetId });
-    return asset;
+    const assets = await this.assetRepository.getAllByAccount({ accountId });
+    return assets;
   }
 }
