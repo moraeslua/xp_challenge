@@ -1,12 +1,39 @@
 import { Request, Response } from 'express';
-import { AccountService } from './account.service';
-import { ICreateAccountRequest } from './interfaces/controller/create-account.request';
+import { HttpStatus } from 'src/helpers';
+import {
+  IDepositRequest,
+  IGetByIdRequest,
+  IWithdrawRequest,
+} from './interfaces/account.controller.interface';
+import { IAccountService } from './interfaces/account.service.interface';
 
 export class AccountController {
-  constructor(private readonly accountService: AccountService) {}
+  constructor(private readonly accountService: IAccountService) {}
 
-  async create(req: Request, res: Response) {
-    const data = req.body as ICreateAccountRequest;
-    return res.status(201).json(this.accountService.create(data));
-  }
+  public getById = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params as unknown as IGetByIdRequest;
+    const accountData = await this.accountService.getById({ id: Number(id) });
+    return res.status(HttpStatus.OK).json(accountData);
+  };
+
+  public withdrawFromAccount = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    const { id, value } = req.body as IWithdrawRequest;
+    const response = await this.accountService.withdrawFromAccount({
+      id,
+      value,
+    });
+    return res.status(HttpStatus.OK).json(response);
+  };
+
+  public depositOnAccount = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    const { id, value } = req.body as IDepositRequest;
+    const response = await this.accountService.depositOnAccount({ id, value });
+    return res.status(HttpStatus.OK).json(response);
+  };
 }
