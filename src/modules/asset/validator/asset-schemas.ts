@@ -1,11 +1,21 @@
 import { IsInt, IsNotEmpty } from 'class-validator';
 
 export class GetByAssetSchema {
-  constructor({ assetId }) {
-    this.assetId = assetId;
+  constructor({ id }) {
+    this.id = id;
   }
 
   @IsNotEmpty()
   @IsInt()
-  assetId: string;
+  id: number;
+}
+
+export class GetByAccountSchema {
+  constructor({ accountId }) {
+    this.accountId = accountId;
+  }
+
+  @IsNotEmpty()
+  @IsInt()
+  accountId: number;
 }
