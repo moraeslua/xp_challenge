@@ -9,12 +9,12 @@ export class InvestmentRoutes {
     protected validateAccount: ValidateAccount,
   ) {
     this.routes.post(
-      '/buy',
+      '/:id/buy',
       validateAccount.execute,
       investmentController.buyStock,
     );
     this.routes.post(
-      '/sell',
+      '/:id/sell',
       validateAccount.execute,
       investmentController.sellStock,
     );

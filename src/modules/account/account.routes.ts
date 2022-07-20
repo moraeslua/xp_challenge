@@ -10,14 +10,20 @@ export class AccountRoutes {
   ) {
     this.routes.get('/:id', accountController.getById);
     this.routes.post(
-      '/withdraw',
+      '/:id/withdraw',
       validateAccount.execute,
       accountController.withdrawFromAccount,
     );
     this.routes.post(
-      '/deposit',
+      '/:id/deposit',
       validateAccount.execute,
       accountController.depositOnAccount,
     );
+    this.routes.get(
+      ':id/investments',
+      validateAccount.execute,
+      accountController.getInvestments,
+    );
+    // this.routes.get('/:id/extract'); get account events and investment events
   }
 }
