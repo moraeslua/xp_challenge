@@ -74,7 +74,19 @@ export interface IGetByEmailResult {
   balance: number;
 }
 
+export interface IGetInvestmentsData {
+  accountId: number;
+}
+
+export interface IGetInvestmentsResult {
+  assetId: number;
+  accountId: number;
+  amount: number;
+  price: number;
+}
+
 export interface IAccountRepository {
+  getInvestments(data: IGetInvestmentsData): Promise<IGetInvestmentsResult>;
   getByEmail(data: IGetByEmailData): Promise<IGetByEmailResult>;
   getById(data: IGetByIdData): Promise<IGetByIdResult>;
   create(data: ICreateAccountData): Promise<ICreateAccountResult>;

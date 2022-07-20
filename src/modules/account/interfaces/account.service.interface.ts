@@ -38,8 +38,20 @@ export interface IGetByIdOutput {
   balance: number;
 }
 
+export interface IGetInvestmentsInput {
+  accountId: number;
+}
+
+export interface IGetInvestmentsOutput {
+  accountId: number;
+  assetId: number;
+  amount: number;
+  price: number;
+}
+
 export interface IAccountService {
   getById(data: IGetByIdInput): Promise<IGetByIdOutput>;
   withdrawFromAccount(data: IWithdrawInput): Promise<IWithdrawOutput>;
   depositOnAccount(data: IDepositInput): Promise<IDepositOutput>;
+  getInvestments(data: IGetInvestmentsInput): Promise<IGetInvestmentsOutput>;
 }

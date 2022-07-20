@@ -45,3 +45,7 @@ export interface IDepositRequest {
   id: number;
   value: number;
 }
+
+export interface IGetInvestmentsRequest {
+  accountId: number;
+}

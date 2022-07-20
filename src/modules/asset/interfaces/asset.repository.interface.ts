@@ -6,19 +6,8 @@ export class IGetAssetByIdResult {
   exchangeShortName: string;
 }
 
-export interface IGetByClientResult {
-  assetId: number;
-  accountId: number;
-  amount: number;
-  price: number;
-}
-
 export interface IGetAssetByIdData {
   id: number;
-}
-
-export interface IGetByClientData {
-  accountId: number;
 }
 
 export interface IUpdateAssetAmountData {
@@ -34,6 +23,5 @@ export interface IUpdateAssetAmountResult {
 
 export interface IAssetRepository {
   findById(data: IGetAssetByIdData): Promise<IGetAssetByIdResult>;
-  getAllByAccount(data: IGetByClientData): Promise<IGetByClientResult>;
   updateAmount(data: IUpdateAssetAmountData): Promise<IUpdateAssetAmountResult>;
 }
