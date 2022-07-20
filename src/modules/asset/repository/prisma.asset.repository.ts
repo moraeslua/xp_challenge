@@ -3,8 +3,6 @@ import {
   IAssetRepository,
   IGetAssetByIdData,
   IGetAssetByIdResult,
-  IGetByClientData,
-  IGetByClientResult,
   IUpdateAssetAmountData,
   IUpdateAssetAmountResult,
 } from '../interfaces/asset.repository.interface';
@@ -30,17 +28,6 @@ export class PrismaAssetRepository implements IAssetRepository {
     const result = await this.client.asset.findUnique({
       where: { id },
     });
-
-    return result;
-  }
-
-  public async getAllByAccount({
-    accountId,
-  }: IGetByClientData): Promise<IGetByClientResult> {
-    const result: IGetByClientResult = await this.client
-      .$queryRaw`SELECT i."accountId", i."assetId", i."amount", a.price FROM "Investment" as i 
-      LEFT JOIN "Asset" as a ON a.id = i."assetId" 
-      WHERE "accountId" = ${accountId} `;
 
     return result;
   }

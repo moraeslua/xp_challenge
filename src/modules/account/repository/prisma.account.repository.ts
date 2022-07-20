@@ -1,20 +1,33 @@
 import { PrismaClient } from '@prisma/client';
 import {
-  IAccountRepository,
-  IAccountTransactionData,
-  IAccountTransactionResult,
-  ICreateAccountData,
-  ICreateAccountEventData,
-  ICreateAccountResult,
-  IGetByEmailData,
-  IGetByEmailResult,
   IGetByIdData,
   IGetByIdResult,
+  IGetByEmailData,
+  IGetByEmailResult,
+  ICreateAccountData,
+  IAccountRepository,
   IUpdateBalanceData,
+  IGetInvestmentsData,
+  ICreateAccountResult,
+  IGetInvestmentsResult,
+  ICreateAccountEventData,
+  IAccountTransactionData,
+  IAccountTransactionResult,
 } from '../interfaces/account.repository.interface';
 
 export class PrismaAccountRepository implements IAccountRepository {
   constructor(private client: PrismaClient) {}
+  public async getInvestments({
+    accountId,
+  }: IGetInvestmentsData): Promise<IGetInvestmentsResult> {
+    const result = await this.client.$queryRaw<IGetInvestmentsResult>`
+      SELECT i."accountId", i."assetId", i."amount", a.price FROM "Investment" as i 
+      LEFT JOIN "Asset" as a ON a.id = i."assetId" 
+      WHERE "accountId" = ${accountId}
+    `;
+
+    return result;
+  }
   public async getByEmail({
     email,
   }: IGetByEmailData): Promise<IGetByEmailResult> {
