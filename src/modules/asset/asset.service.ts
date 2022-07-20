@@ -3,8 +3,6 @@ import { HttpException } from 'src/helpers/http-exception';
 import { IAssetRepository } from './interfaces/asset.repository.interface';
 import {
   IAssetService,
-  IGetAllByAccountInput,
-  IGetAllByAccountOutput,
   IGetByAssetInput,
   IGetByAssetOutput,
 } from './interfaces/asset.service.interface';
@@ -22,14 +20,5 @@ export class AssetService implements IAssetService {
     }
 
     return asset;
-  }
-
-  public async getAllByAccount({
-    accountId,
-  }: IGetAllByAccountInput): Promise<IGetAllByAccountOutput> {
-    await AssetValidator.getByAccount({ accountId });
-
-    const assets = await this.assetRepository.getAllByAccount({ accountId });
-    return assets;
   }
 }

@@ -7,6 +7,8 @@ import {
   IDepositOutput,
   IGetByIdInput,
   IGetByIdOutput,
+  IGetInvestmentsInput,
+  IGetInvestmentsOutput,
   IWithdrawInput,
   IWithdrawOutput,
 } from './interfaces/account.service.interface';
@@ -14,6 +16,15 @@ import { AccountValidator } from './validator/account-validator';
 
 export class AccountService implements IAccountService {
   constructor(private accountRepository: IAccountRepository) {}
+  public async getInvestments({
+    accountId,
+  }: IGetInvestmentsInput): Promise<IGetInvestmentsOutput> {
+    await AccountValidator.getInvestments({ accountId });
+    const investments = await this.accountRepository.getInvestments({
+      accountId,
+    });
+    return investments;
+  }
 
   public async getById({ id }: IGetByIdInput): Promise<IGetByIdOutput> {
     await AccountValidator.getById({ id });
