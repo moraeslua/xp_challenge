@@ -3,6 +3,7 @@ import { HttpStatus } from 'src/helpers';
 import {
   IDepositRequest,
   IGetByIdRequest,
+  IGetInvestmentsRequest,
   IWithdrawRequest,
 } from './interfaces/account.controller.interface';
 import { IAccountService } from './interfaces/account.service.interface';
@@ -25,7 +26,7 @@ export class AccountController {
       id,
       value,
     });
-    return res.status(HttpStatus.OK).json(response);
+    return res.status(HttpStatus.CREATED).json(response);
   };
 
   public depositOnAccount = async (
@@ -34,6 +35,17 @@ export class AccountController {
   ): Promise<Response> => {
     const { id, value } = req.body as IDepositRequest;
     const response = await this.accountService.depositOnAccount({ id, value });
+    return res.status(HttpStatus.CREATED).json(response);
+  };
+
+  public getInvestments = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    const { accountId } = req.params as unknown as IGetInvestmentsRequest;
+    const response = await this.accountService.getInvestments({
+      accountId: Number(accountId),
+    });
     return res.status(HttpStatus.OK).json(response);
   };
 }
