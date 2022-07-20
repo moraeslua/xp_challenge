@@ -61,7 +61,21 @@ export interface ICreateAccountEventData {
   type: AccountEventType;
 }
 
+export interface IGetByEmailData {
+  email: string;
+}
+
+export interface IGetByEmailResult {
+  id: number;
+  email: string;
+  fullName: string;
+  birthDate: Date;
+  hashedPassword: string;
+  balance: number;
+}
+
 export interface IAccountRepository {
+  getByEmail(data: IGetByEmailData): Promise<IGetByEmailResult>;
   getById(data: IGetByIdData): Promise<IGetByIdResult>;
   create(data: ICreateAccountData): Promise<ICreateAccountResult>;
   executeAccountTransaction(

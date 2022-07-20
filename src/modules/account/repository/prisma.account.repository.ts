@@ -6,6 +6,8 @@ import {
   ICreateAccountData,
   ICreateAccountEventData,
   ICreateAccountResult,
+  IGetByEmailData,
+  IGetByEmailResult,
   IGetByIdData,
   IGetByIdResult,
   IUpdateBalanceData,
@@ -13,9 +15,26 @@ import {
 
 export class PrismaAccountRepository implements IAccountRepository {
   constructor(private client: PrismaClient) {}
+  public async getByEmail({
+    email,
+  }: IGetByEmailData): Promise<IGetByEmailResult> {
+    const result = await this.client.account.findUnique({
+      where: { email },
+    });
+
+    return result;
+  }
 
   public async create(data: ICreateAccountData): Promise<ICreateAccountResult> {
-    throw new Error('Method not implemented.');
+    const { email, fullName, birthDate, hashedPassword } = data;
+
+    const result = await this.client.$queryRaw<ICreateAccountResult[]>`
+      INSERT INTO "Account" ("email", "fullName", "birthDate", "hashedPassword")
+      VALUES (${email}, ${fullName}, ${birthDate}, ${hashedPassword})
+      RETURNING "id", "email", "fullName", "birthDate", "hashedPassword", "balance";
+    `;
+
+    return result[0];
   }
 
   public async getById({ id }: IGetByIdData): Promise<IGetByIdResult> {

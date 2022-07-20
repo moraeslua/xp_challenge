@@ -1,20 +1,5 @@
 import { AccountEventType } from '@prisma/client';
 
-export interface ICreateAccountOutput {
-  id: number;
-  email: string;
-  fullName: string;
-  birthDate: Date;
-  balance: number;
-}
-
-export interface ICreateAccountInput {
-  email: string;
-  fullName: string;
-  birthDate: Date;
-  password: string;
-}
-
 export interface IWithdrawInput {
   id: number;
   value: number;
