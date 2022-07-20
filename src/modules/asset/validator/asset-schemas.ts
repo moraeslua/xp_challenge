@@ -9,13 +9,3 @@ export class GetByAssetSchema {
   @IsInt()
   id: number;
 }
-
-export class GetByAccountSchema {
-  constructor({ accountId }) {
-    this.accountId = accountId;
-  }
-
-  @IsNotEmpty()
-  @IsInt()
-  accountId: number;
-}

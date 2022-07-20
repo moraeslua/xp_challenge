@@ -39,3 +39,13 @@ export class WithdrawFromAccountSchema extends ValidateIntIdSchema {
   @IsNumber()
   value: number;
 }
+
+export class GetInvestmentsSchema {
+  constructor({ accountId }) {
+    this.accountId = accountId;
+  }
+
+  @IsNotEmpty()
+  @IsInt()
+  accountId: number;
+}
