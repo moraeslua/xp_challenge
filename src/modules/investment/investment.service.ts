@@ -1,5 +1,5 @@
 import { InvestmentEventType } from '@prisma/client';
-import { HttpException, HttpStatus } from 'src/helpers';
+import { HttpException, HttpStatus } from '../../helpers';
 import { IAccountRepository } from '../account/interfaces/account.repository.interface';
 import { IAssetRepository } from '../asset/interfaces/asset.repository.interface';
 import { IInvestimentRepository } from './interfaces/investment.repository.interface';
@@ -89,7 +89,7 @@ export class InvestmentService implements IInvestmentService {
     const account = await this.accountRepository.getById({ id: accountId });
 
     if (!account) {
-      throw new HttpException('Account does not exists', HttpStatus.NOT_FOUND);
+      throw new HttpException('Account does not exists.', HttpStatus.NOT_FOUND);
     }
 
     if (asset.amount < amount) {
@@ -108,13 +108,12 @@ export class InvestmentService implements IInvestmentService {
       );
     }
 
-    const newAssetAmount = asset.amount - amount;
-
     const investment = await this.investmentRepository.findById({
       accountId,
       assetId,
     });
 
+    const newAssetAmount = asset.amount - amount;
     const newAccountAmount = investment ? investment.amount + amount : amount;
 
     const result = await this.investmentRepository.upsertInvestmentTransaction({

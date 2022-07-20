@@ -22,25 +22,25 @@ export interface ICreateInvestmentTransactionResult {
   createdAt: Date;
 }
 
-export interface IRemoveInvestmentTransactionData {
-  accountId: number;
-  assetId: number;
-  amount: number;
-  price: number;
-  type: InvestmentEventType;
-  accountBalance: number;
-  assetAmount: number;
-}
+// export interface IRemoveInvestmentTransactionData {
+//   accountId: number;
+//   assetId: number;
+//   amount: number;
+//   price: number;
+//   type: InvestmentEventType;
+//   accountBalance: number;
+//   assetAmount: number;
+// }
 
-export interface IRemoveInvestmentTransactionResult {
-  id: number;
-  accountId: number;
-  assetId: number;
-  amount: number;
-  price: number;
-  type: InvestmentEventType;
-  createdAt: Date;
-}
+// export interface IRemoveInvestmentTransactionResult {
+//   id: number;
+//   accountId: number;
+//   assetId: number;
+//   amount: number;
+//   price: number;
+//   type: InvestmentEventType;
+//   createdAt: Date;
+// }
 
 export interface IGetByIdData {
   accountId: number;
