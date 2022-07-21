@@ -7,8 +7,9 @@ import {
 } from './interfaces/auth.service.interface';
 import bcrypt from 'bcrypt';
 import { IAccountRepository } from '../account/interfaces/account.repository.interface';
-import { HttpException, HttpStatus } from 'src/helpers';
-import { generateToken } from 'src/helpers/jwt-helpers';
+import { HttpException, HttpStatus } from '../../helpers';
+import { generateToken } from '../../helpers/jwt-helpers';
+import { AuthValidator } from './validator/auth-validator';
 
 const BCRYPT_ROUNDS = 10;
 
@@ -16,6 +17,7 @@ export class AuthService implements IAuthService {
   constructor(private accountRepository: IAccountRepository) {}
   public async signUp(data: ISignUpInput): Promise<ISignUpOutput> {
     const { email, password, fullName, birthDate } = data;
+    await AuthValidator.signUp({ email, password, fullName, birthDate });
 
     const emailIsInUse = await this.accountRepository.getByEmail({ email });
 
@@ -53,6 +55,7 @@ export class AuthService implements IAuthService {
 
   public async signIn(data: ISignInInput): Promise<ISignInOutput> {
     const { email, password } = data;
+    await AuthValidator.signIn({ email, password });
     const account = await this.accountRepository.getByEmail({ email });
     const passwordMatches = await bcrypt.compare(
       password,
