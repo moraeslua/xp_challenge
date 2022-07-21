@@ -8,7 +8,7 @@ export class AccountRoutes {
     protected accountController: AccountController,
     protected validateAccount: ValidateAccount,
   ) {
-    this.routes.get('/:id', accountController.getById);
+    this.routes.get('/:id', validateAccount.execute, accountController.getById);
     this.routes.post(
       '/:id/withdraw',
       validateAccount.execute,
@@ -20,7 +20,7 @@ export class AccountRoutes {
       accountController.depositOnAccount,
     );
     this.routes.get(
-      ':id/investments',
+      '/:id/investments',
       validateAccount.execute,
       accountController.getInvestments,
     );

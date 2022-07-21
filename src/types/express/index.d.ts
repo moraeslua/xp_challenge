@@ -1,7 +1,7 @@
 import 'express';
 
 interface IAccountPayload {
-  accountId: number;
+  id: number;
   email: string;
 }
 

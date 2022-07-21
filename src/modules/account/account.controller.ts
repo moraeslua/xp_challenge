@@ -13,7 +13,14 @@ export class AccountController {
 
   public getById = async (req: Request, res: Response): Promise<Response> => {
     const { id } = req.params as unknown as IGetByIdRequest;
-    const accountData = await this.accountService.getById({ id: Number(id) });
+    const accoundId = Number(id);
+
+    if (res.locals.account?.id !== accoundId) {
+      return res.status(HttpStatus.UNAUTHORIZED).end();
+    }
+
+    const accountData = await this.accountService.getById({ id: accoundId });
+
     return res.status(HttpStatus.OK).json(accountData);
   };
 
@@ -22,6 +29,11 @@ export class AccountController {
     res: Response,
   ): Promise<Response> => {
     const { id, value } = req.body as IWithdrawRequest;
+
+    if (res.locals.account.id !== id) {
+      return res.status(HttpStatus.UNAUTHORIZED).end();
+    }
+
     const response = await this.accountService.withdrawFromAccount({
       id,
       value,
@@ -34,6 +46,11 @@ export class AccountController {
     res: Response,
   ): Promise<Response> => {
     const { id, value } = req.body as IDepositRequest;
+
+    if (res.locals.account?.id !== id) {
+      return res.status(HttpStatus.UNAUTHORIZED).end();
+    }
+
     const response = await this.accountService.depositOnAccount({ id, value });
     return res.status(HttpStatus.CREATED).json(response);
   };
@@ -42,10 +59,17 @@ export class AccountController {
     req: Request,
     res: Response,
   ): Promise<Response> => {
-    const { accountId } = req.params as unknown as IGetInvestmentsRequest;
+    const { id } = req.params as unknown as IGetInvestmentsRequest;
+    const accountId = Number(id);
+
+    if (res.locals.account?.id !== accountId) {
+      return res.status(HttpStatus.UNAUTHORIZED).end();
+    }
+
     const response = await this.accountService.getInvestments({
-      accountId: Number(accountId),
+      accountId,
     });
+
     return res.status(HttpStatus.OK).json(response);
   };
 }
