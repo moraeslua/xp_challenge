@@ -10,7 +10,7 @@ export interface ISignUpOutput {
 export interface ISignUpInput {
   email: string;
   fullName: string;
-  birthDate: Date;
+  birthDate: string;
   password: string;
 }
 
