@@ -13,7 +13,7 @@ const clearMocks = () => {
 };
 
 describe('Account service tests', () => {
-  describe('"withdrawFromAccount" method', () => {
+  describe('"deposit on account" method', () => {
     describe('when sucessful', () => {
       const accountGetByIdMock = jest.fn().mockResolvedValue({
         id: 1,
