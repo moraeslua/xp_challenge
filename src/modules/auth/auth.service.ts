@@ -56,7 +56,13 @@ export class AuthService implements IAuthService {
   public async signIn(data: ISignInInput): Promise<ISignInOutput> {
     const { email, password } = data;
     await AuthValidator.signIn({ email, password });
+
     const account = await this.accountRepository.getByEmail({ email });
+
+    if (!account) {
+      throw new HttpException('Account does not exists.', HttpStatus.NOT_FOUND);
+    }
+
     const passwordMatches = await bcrypt.compare(
       password,
       account.hashedPassword,
@@ -74,6 +80,7 @@ export class AuthService implements IAuthService {
     const token = generateToken({ id: account.id, email });
 
     const dataWithToken = { ...account, token };
+
     return dataWithToken;
   }
 }
