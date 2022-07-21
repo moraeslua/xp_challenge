@@ -3,7 +3,7 @@
 /node_modules
 
 # Tests
-/coverage
+src/coverage
 
 # ENV
 .env

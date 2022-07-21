@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test:cov": "jest --coverage",
     "test": "jest --verbose",
     "test:watch": "jest --watch",
     "truncate": "ts-node src/scripts/clean-up",
