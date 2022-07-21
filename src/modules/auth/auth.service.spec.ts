@@ -56,6 +56,14 @@ describe('Auth Service tests', () => {
           birthDate: new Date('2000-03-05T03:00:00.000Z'),
         });
 
+        expect(bcrypt.hash).toHaveBeenCalledTimes(1);
+        expect(bcrypt.hash).toHaveBeenCalledWith('password', 10);
+        expect(jwtHelpers.generateToken).toHaveBeenCalledTimes(1);
+        expect(jwtHelpers.generateToken).toHaveBeenCalledWith({
+          id: 4,
+          email: 'rocco@email.com',
+        });
+
         expect(result).toBeDefined();
       });
 
