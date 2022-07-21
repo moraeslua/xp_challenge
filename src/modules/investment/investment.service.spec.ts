@@ -1,20 +1,33 @@
 import { AccountRepositoryMock } from '../../__mocks__/account/account.repository.mock';
 import { AssetRepositoryMock } from '../../__mocks__/asset/asset.repository.mock';
 import { InvestmentRepositoryMock } from '../../__mocks__/investment/investment.repository.mock';
+import { IInvestmentService } from './interfaces/investment.service.interface';
 import { InvestmentService } from './investment.service';
 
-const assetRepositoryMock = new AssetRepositoryMock();
-const accountRepositoryMock = new AccountRepositoryMock();
-const investmentRepositoryMock = new InvestmentRepositoryMock();
+let assetRepositoryMock: AssetRepositoryMock;
+let accountRepositoryMock: AccountRepositoryMock;
+let investmentRepositoryMock: InvestmentRepositoryMock;
 
-const investmentService = new InvestmentService(
-  investmentRepositoryMock,
-  assetRepositoryMock,
-  accountRepositoryMock,
-);
+let investmentService: IInvestmentService;
+
+const clearMocks = () => {
+  jest.clearAllMocks();
+
+  assetRepositoryMock = new AssetRepositoryMock();
+  accountRepositoryMock = new AccountRepositoryMock();
+  investmentRepositoryMock = new InvestmentRepositoryMock();
+
+  investmentService = new InvestmentService(
+    investmentRepositoryMock,
+    assetRepositoryMock,
+    accountRepositoryMock,
+  );
+};
 
 describe('Investment Service tests', () => {
   describe('"buy stock" method', () => {
+    beforeEach(() => clearMocks());
+
     describe('when sucessfull', () => {
       const assetFindByIdMock = jest.fn().mockResolvedValue({
         id: 12,
@@ -116,6 +129,8 @@ describe('Investment Service tests', () => {
       });
     });
     describe('when not sucessfull', () => {
+      beforeEach(() => clearMocks());
+
       it('should throw an error when "assetId", "accountId" or "amount" are not passed as arguments', async () => {
         await expect(
           investmentService.buyStock({
@@ -211,13 +226,16 @@ describe('Investment Service tests', () => {
         createdAt: '2022-07-20T19:29:16.728Z',
       });
 
-      it('should call repository with correct arguments', async () => {
+      beforeEach(() => {
+        clearMocks();
         investmentRepositoryMock.findById = investmentFindByIdMock;
         assetRepositoryMock.findById = assetFindByIdMock;
         accountRepositoryMock.getById = accountGetByIdMock;
         investmentRepositoryMock.upsertInvestmentTransaction =
           upsertTransactionMock;
+      });
 
+      it('should call repository with correct arguments', async () => {
         const result = await investmentService.sellStock({
           accountId: 1,
           assetId: 12,
@@ -277,6 +295,8 @@ describe('Investment Service tests', () => {
       });
     });
     describe('when not sucessfull', () => {
+      beforeEach(() => clearMocks());
+
       it('should throw an error when "assetId", "accountId" or "amount" are not passed as arguments', async () => {
         await expect(
           investmentService.sellStock({
