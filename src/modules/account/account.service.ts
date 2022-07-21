@@ -1,5 +1,5 @@
 import { AccountEventType } from '@prisma/client';
-import { HttpException, HttpStatus } from 'src/helpers';
+import { HttpException, HttpStatus } from '../../helpers';
 import { IAccountRepository } from './interfaces/account.repository.interface';
 import {
   IAccountService,
