@@ -1,6 +1,5 @@
 import { AccountRepositoryMock } from '../../__mocks__/account/account.repository.mock';
 import { AccountService } from './account.service';
-// import { IAccountRepository } from './interfaces/account.repository.interface';
 import { IAccountService } from './interfaces/account.service.interface';
 
 let accountRepository: AccountRepositoryMock;
@@ -101,6 +100,118 @@ describe('Account service tests', () => {
             value: 3000.54,
           } as never),
         ).rejects.toThrow(new Error('id should not be empty'));
+      });
+    });
+  });
+
+  describe('"withdraw from account" method', () => {
+    describe('when sucessfull', () => {
+      const accountGetByIdMock = jest.fn().mockResolvedValue({
+        id: 1,
+        email: 'salman@email.com',
+        fullName: 'Salman Jaramillo',
+        birthDate: '2000-05-03T03:00:00.000Z',
+        hashedPassword: 'password',
+        balance: 3050.6,
+      });
+
+      const accountTransactionMock = jest.fn().mockResolvedValue({
+        id: 6,
+        value: 1000.15,
+        type: 'WITHDRAW',
+        createdAt: '2022-07-21T12:40:48.511Z',
+        accountId: 1,
+      });
+
+      beforeEach(() => {
+        clearMocks();
+        accountRepository.getById = accountGetByIdMock;
+        accountRepository.executeAccountTransaction = accountTransactionMock;
+      });
+
+      it('should call repository with correct arguments', async () => {
+        const result = await accountService.withdrawFromAccount({
+          id: 1,
+          value: 1000.15,
+        });
+
+        expect(accountRepository.getById).toHaveBeenNthCalledWith(1, { id: 1 });
+        expect(
+          accountRepository.executeAccountTransaction,
+        ).toHaveBeenNthCalledWith(
+          1,
+          expect.objectContaining({
+            accountId: 1,
+            value: 1000.15,
+            balance: 2050.45,
+            type: 'WITHDRAW',
+          }),
+        );
+
+        expect(result).toBeDefined();
+      });
+      it('should return an object with correct properties and values', async () => {
+        const result = await accountService.withdrawFromAccount({
+          id: 1,
+          value: 1000.15,
+        });
+
+        expect(result).toBeDefined();
+        expect(result).toEqual(
+          expect.objectContaining({
+            id: 6,
+            value: 1000.15,
+            type: 'WITHDRAW',
+            createdAt: '2022-07-21T12:40:48.511Z',
+            accountId: 1,
+          }),
+        );
+      });
+    });
+    describe('when not sucessfull', () => {
+      beforeEach(() => clearMocks());
+
+      it('should throw an error when the amount to be withdrawn is less than the balance', async () => {
+        accountRepository.getById = jest.fn().mockResolvedValue({
+          id: 1,
+          email: 'salman@email.com',
+          fullName: 'Salman Jaramillo',
+          birthDate: '2000-05-03T03:00:00.000Z',
+          hashedPassword: 'password',
+          balance: 3050.6,
+        });
+
+        await expect(
+          accountService.withdrawFromAccount({
+            id: 1,
+            value: 5000,
+          }),
+        ).rejects.toThrow(new Error('Such amount is not available on account'));
+      });
+
+      it('should throw an error when "id" or "value" are not passed as arguments', async () => {
+        await expect(
+          accountService.depositOnAccount({
+            id: 1,
+          } as never),
+        ).rejects.toThrow(new Error('value must not be less than 1'));
+
+        await expect(
+          accountService.depositOnAccount({
+            value: 3000.54,
+          } as never),
+        ).rejects.toThrowError('id should not be empty');
+      });
+
+      it('shoul throw an error when account doest not exists', async () => {
+        accountRepository.getById = jest.fn().mockResolvedValue(undefined);
+
+        await expect(
+          accountService.depositOnAccount({
+            id: 1,
+            value: 15.54,
+          }),
+        ).rejects.toThrowError('Account does not exists.');
       });
     });
   });
