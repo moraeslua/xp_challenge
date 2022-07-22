@@ -1,7 +1,7 @@
 import { SignOptions } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
-const SECRET = process.env.JWT_SECRET || 'jwtSecret';
+const SECRET = process.env.JWT_SECRET;
 
 const jwtConfig: SignOptions = {
   expiresIn: '25m',
