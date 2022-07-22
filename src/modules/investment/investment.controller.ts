@@ -11,6 +11,11 @@ export class InvestmentController {
 
   public buyStock = async (req: Request, res: Response): Promise<Response> => {
     const { accountId, assetId, amount } = req.body as IBuyStockRequest;
+
+    if (res.locals.account?.id !== accountId) {
+      return res.status(HttpStatus.UNAUTHORIZED).end();
+    }
+
     const response = await this.investmentService.buyStock({
       accountId,
       assetId,
@@ -22,6 +27,11 @@ export class InvestmentController {
 
   public sellStock = async (req: Request, res: Response): Promise<Response> => {
     const { accountId, assetId, amount } = req.body as ISellStockRequest;
+
+    if (res.locals.account?.id !== accountId) {
+      return res.status(HttpStatus.UNAUTHORIZED).end();
+    }
+
     const response = await this.investmentService.sellStock({
       accountId,
       assetId,
