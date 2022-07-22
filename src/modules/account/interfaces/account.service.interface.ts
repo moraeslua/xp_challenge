@@ -1,4 +1,4 @@
-import { AccountEventType } from '@prisma/client';
+import { AccountEventType, InvestmentEventType } from '@prisma/client';
 
 export interface IWithdrawInput {
   id: number;
@@ -49,9 +49,29 @@ export interface IGetInvestmentsOutput {
   price: number;
 }
 
+export interface IGetInvestmentEventsInput {
+  accountId: number;
+  limit: number;
+  offset: number;
+}
+
+export interface IGetInvestmentEventsOutput {
+  id: number;
+  accountId: number;
+  assetId: number;
+  symbol: string;
+  price: number;
+  amount: number;
+  type: InvestmentEventType;
+  createdAt: Date;
+}
+
 export interface IAccountService {
+  getInvestmentEvents(
+    data: IGetInvestmentEventsInput,
+  ): Promise<IGetInvestmentEventsOutput[]>;
   getById(data: IGetByIdInput): Promise<IGetByIdOutput>;
   withdrawFromAccount(data: IWithdrawInput): Promise<IWithdrawOutput>;
   depositOnAccount(data: IDepositInput): Promise<IDepositOutput>;
-  getInvestments(data: IGetInvestmentsInput): Promise<IGetInvestmentsOutput>;
+  getInvestments(data: IGetInvestmentsInput): Promise<IGetInvestmentsOutput[]>;
 }

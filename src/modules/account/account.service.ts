@@ -7,6 +7,8 @@ import {
   IDepositOutput,
   IGetByIdInput,
   IGetByIdOutput,
+  IGetInvestmentEventsInput,
+  IGetInvestmentEventsOutput,
   IGetInvestmentsInput,
   IGetInvestmentsOutput,
   IWithdrawInput,
@@ -16,9 +18,30 @@ import { AccountValidator } from './validator/account-validator';
 
 export class AccountService implements IAccountService {
   constructor(private accountRepository: IAccountRepository) {}
+  public async getInvestmentEvents(
+    data: IGetInvestmentEventsInput,
+  ): Promise<IGetInvestmentEventsOutput[]> {
+    const { accountId, limit, offset } = data;
+    await AccountValidator.getInvestmentEvents({ accountId, limit, offset });
+
+    const account = await this.accountRepository.getById({ id: accountId });
+
+    if (!account) {
+      throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
+    }
+
+    const investmentEvents = await this.accountRepository.getInvestmentEvents({
+      accountId,
+      limit,
+      offset,
+    });
+
+    return investmentEvents;
+  }
+
   public async getInvestments({
     accountId,
-  }: IGetInvestmentsInput): Promise<IGetInvestmentsOutput> {
+  }: IGetInvestmentsInput): Promise<IGetInvestmentsOutput[]> {
     await AccountValidator.getInvestments({ accountId });
     const investments = await this.accountRepository.getInvestments({
       accountId,

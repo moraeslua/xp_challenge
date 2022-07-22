@@ -3,12 +3,14 @@ import { formatError, HttpException } from '../../../helpers';
 import {
   IDepositInput,
   IGetByIdInput,
+  IGetInvestmentEventsInput,
   IGetInvestmentsInput,
   IWithdrawInput,
 } from '../interfaces/account.service.interface';
 import {
   DepositOnAccountSchema,
   GetByIdSchema,
+  GetInvestmentEventsSchema,
   GetInvestmentsSchema,
   WithdrawFromAccountSchema,
 } from './account-schemas';
@@ -46,6 +48,16 @@ export class AccountValidator {
     accountId,
   }: IGetInvestmentsInput): Promise<void> {
     const inputs = new GetInvestmentsSchema({ accountId });
+
+    await this.execute(inputs);
+  }
+
+  static async getInvestmentEvents({
+    accountId,
+    limit,
+    offset,
+  }: IGetInvestmentEventsInput): Promise<void> {
+    const inputs = new GetInvestmentEventsSchema({ accountId, limit, offset });
 
     await this.execute(inputs);
   }
