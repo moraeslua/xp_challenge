@@ -1,7 +1,10 @@
 import { validate } from 'class-validator';
 import { formatError, HttpException } from 'src/helpers';
-import { IGetByAssetInput } from '../interfaces/asset.service.interface';
-import { GetByAssetSchema } from './asset-schemas';
+import {
+  IGetAllInput,
+  IGetByAssetInput,
+} from '../interfaces/asset.service.interface';
+import { GetAllSchema, GetByAssetSchema } from './asset-schemas';
 
 export class AssetValidator {
   private static async execute(inputs: object): Promise<void> {
@@ -16,6 +19,12 @@ export class AssetValidator {
 
   static async getByAsset({ id }: IGetByAssetInput): Promise<void> {
     const inputs = new GetByAssetSchema({ id });
+    //
+    await this.execute(inputs);
+  }
+
+  static async getAll({ limit, offset }: IGetAllInput): Promise<void> {
+    const inputs = new GetAllSchema({ limit, offset });
     //
     await this.execute(inputs);
   }

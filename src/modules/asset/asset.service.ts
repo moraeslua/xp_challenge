@@ -3,6 +3,8 @@ import { HttpException } from 'src/helpers/http-exception';
 import { IAssetRepository } from './interfaces/asset.repository.interface';
 import {
   IAssetService,
+  IGetAllInput,
+  IGetAllOutput,
   IGetByAssetInput,
   IGetByAssetOutput,
 } from './interfaces/asset.service.interface';
@@ -10,6 +12,14 @@ import { AssetValidator } from './validator/asset-validator';
 
 export class AssetService implements IAssetService {
   constructor(private assetRepository: IAssetRepository) {}
+
+  public async getAll(data: IGetAllInput): Promise<IGetAllOutput[]> {
+    const { limit, offset } = data;
+    await AssetValidator.getAll({ limit, offset });
+
+    const assets = await this.assetRepository.getAll({ limit, offset });
+    return assets;
+  }
 
   public async getById({ id }: IGetByAssetInput): Promise<IGetByAssetOutput> {
     await AssetValidator.getByAsset({ id });

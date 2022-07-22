@@ -9,3 +9,18 @@ export class GetByAssetSchema {
   @IsInt()
   id: number;
 }
+
+export class GetAllSchema {
+  constructor({ limit, offset }) {
+    this.limit = limit;
+    this.offset = offset;
+  }
+
+  @IsNotEmpty()
+  @IsInt()
+  limit: number;
+
+  @IsNotEmpty()
+  @IsInt()
+  offset: number;
+}
