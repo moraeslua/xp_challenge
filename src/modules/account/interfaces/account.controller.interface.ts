@@ -49,3 +49,9 @@ export interface IDepositRequest {
 export interface IGetInvestmentsRequest {
   id: number;
 }
+
+export interface IGetInvestmentEventsRequest {
+  id: number;
+  limit: number;
+  offset: number;
+}
