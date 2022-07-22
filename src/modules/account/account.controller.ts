@@ -13,13 +13,13 @@ export class AccountController {
 
   public getById = async (req: Request, res: Response): Promise<Response> => {
     const { id } = req.params as unknown as IGetByIdRequest;
-    const accoundId = Number(id);
+    const accountId = Number(id);
 
-    if (res.locals.account?.id !== accoundId) {
+    if (res.locals.account?.id !== accountId) {
       return res.status(HttpStatus.UNAUTHORIZED).end();
     }
 
-    const accountData = await this.accountService.getById({ id: accoundId });
+    const accountData = await this.accountService.getById({ id: accountId });
 
     return res.status(HttpStatus.OK).json(accountData);
   };
