@@ -5,5 +5,6 @@ export class AssetRoutes {
   public routes = express.Router();
   constructor(protected assetController: AssetController) {
     this.routes.get('/:id', assetController.getById);
+    this.routes.get('/', assetController.getAll);
   }
 }

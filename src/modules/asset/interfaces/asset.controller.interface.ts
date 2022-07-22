@@ -9,3 +9,8 @@ export interface IGetByAssetResponse {
   symbol: string;
   exchangeShortName: string;
 }
+
+export interface IGetAllRequest {
+  limit: number;
+  offset: number;
+}
