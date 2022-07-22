@@ -13,14 +13,32 @@ import {
   ICreateAccountEventData,
   IAccountTransactionData,
   IAccountTransactionResult,
+  IGetInvestmentEventsData,
+  IGetInvestmentEventsResult,
 } from '../interfaces/account.repository.interface';
 
 export class PrismaAccountRepository implements IAccountRepository {
   constructor(private client: PrismaClient) {}
+  public async getInvestmentEvents(
+    data: IGetInvestmentEventsData,
+  ): Promise<IGetInvestmentEventsResult[]> {
+    const { accountId, limit, offset } = data;
+
+    const result = await this.client.$queryRaw<IGetInvestmentEventsResult[]>`
+      SELECT
+        i.id, i."accountId", i."assetId", a.symbol, i.price,
+        i.amount, i.type, i."createdAt" 
+      FROM "InvestmentEvents" as i 
+      INNER JOIN "Asset" as a ON a.id = i."assetId"
+      WHERE i."accountId" = ${accountId}
+      LIMIT ${limit} OFFSET ${offset};
+    `;
+    return result;
+  }
   public async getInvestments({
     accountId,
-  }: IGetInvestmentsData): Promise<IGetInvestmentsResult> {
-    const result = await this.client.$queryRaw<IGetInvestmentsResult>`
+  }: IGetInvestmentsData): Promise<IGetInvestmentsResult[]> {
+    const result = await this.client.$queryRaw<IGetInvestmentsResult[]>`
       SELECT i."accountId", i."assetId", i."amount", a.price FROM "Investment" as i 
       LEFT JOIN "Asset" as a ON a.id = i."assetId" 
       WHERE "accountId" = ${accountId}

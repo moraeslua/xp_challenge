@@ -1,4 +1,4 @@
-import { AccountEventType } from '@prisma/client';
+import { AccountEventType, InvestmentEventType } from '@prisma/client';
 
 export interface ICreateAccountData {
   email: string;
@@ -85,8 +85,28 @@ export interface IGetInvestmentsResult {
   price: number;
 }
 
+export interface IGetInvestmentEventsData {
+  accountId: number;
+  limit: number;
+  offset: number;
+}
+
+export interface IGetInvestmentEventsResult {
+  id: number;
+  accountId: number;
+  assetId: number;
+  symbol: string;
+  price: number;
+  amount: number;
+  type: InvestmentEventType;
+  createdAt: Date;
+}
+
 export interface IAccountRepository {
-  getInvestments(data: IGetInvestmentsData): Promise<IGetInvestmentsResult>;
+  getInvestmentEvents(
+    data: IGetInvestmentEventsData,
+  ): Promise<IGetInvestmentEventsResult[]>;
+  getInvestments(data: IGetInvestmentsData): Promise<IGetInvestmentsResult[]>;
   getByEmail(data: IGetByEmailData): Promise<IGetByEmailResult>;
   getById(data: IGetByIdData): Promise<IGetByIdResult>;
   create(data: ICreateAccountData): Promise<ICreateAccountResult>;
