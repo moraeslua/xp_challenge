@@ -4,10 +4,12 @@ export interface IGetByAssetInput {
 
 export interface IGetByAssetOutput {
   id: number;
-  amount: number;
-  price: number;
   symbol: string;
+  companyName: string;
+  price: number;
+  exchange: string;
   exchangeShortName: string;
+  amount: number;
 }
 
 export interface IGetAllInput {
