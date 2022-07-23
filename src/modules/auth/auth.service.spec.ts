@@ -53,7 +53,7 @@ describe('Auth Service tests', () => {
           email: 'rocco@email.com',
           hashedPassword: 'hashedPassword',
           fullName: 'Rocco Anderson',
-          birthDate: new Date('2000-03-05T03:00:00.000Z'),
+          birthDate: new Date('03/05/2000'),
         });
 
         expect(bcrypt.hash).toHaveBeenCalledTimes(1);
