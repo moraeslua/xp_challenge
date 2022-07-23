@@ -25,10 +25,10 @@ export class AccountRoutes {
       accountController.getInvestments,
     );
     this.routes.get(
-      '/:id/investmentsEvents',
+      '/:id/investments/events',
       validateAccount.execute,
       accountController.getInvestmentEvents,
     );
-    // this.routes.get('/:id/extract'); get account events and investment events
+    this.routes.get('/:id/events', accountController.getEvents);
   }
 }

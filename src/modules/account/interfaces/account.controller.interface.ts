@@ -55,3 +55,9 @@ export interface IGetInvestmentEventsRequest {
   limit: number;
   offset: number;
 }
+
+export interface IGetEventsRequest {
+  id: number;
+  limit: number;
+  offset: number;
+}

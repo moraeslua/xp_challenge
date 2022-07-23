@@ -3,6 +3,7 @@ import { HttpStatus } from 'src/helpers';
 import {
   IDepositRequest,
   IGetByIdRequest,
+  IGetEventsRequest,
   IGetInvestmentEventsRequest,
   IGetInvestmentsRequest,
   IWithdrawRequest,
@@ -107,5 +108,25 @@ export class AccountController {
     });
 
     res.status(HttpStatus.OK).json(investmentEvents);
+  };
+
+  public getEvents = async (req: Request, res: Response) => {
+    const { id } = req.params as unknown as Pick<IGetEventsRequest, 'id'>;
+    const queries = req.query as unknown as Pick<
+      IGetEventsRequest,
+      'limit' | 'offset'
+    >;
+
+    const accountId = Number(id);
+    const limit = Number(queries.limit) || LIMIT_DEFAULT_VALUE;
+    const offset = Number(queries.offset) || OFFSET_DEFAULT_VALUE;
+
+    const events = await this.accountService.getEvents({
+      accountId,
+      limit,
+      offset,
+    });
+
+    return res.status(HttpStatus.OK).json(events);
   };
 }
