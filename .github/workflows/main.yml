@@ -10,11 +10,13 @@ jobs:
         - name: Instala o node com a versão especificada
           uses: actions/setup-node@v1
           with:
-            node-version: 14
+            node-version: 16.13.2
 
         - name: instalando as dependências
           run: npm install
 
-        - name: executando o lint para verificar se a erros
+        - name: executando o lint
           run: npx eslint .
-          
+        
+        - name: executando testes unitários
+          run: npm run test
