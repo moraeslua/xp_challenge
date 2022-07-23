@@ -1,4 +1,4 @@
-import { AccountEventType } from '@prisma/client';
+import { AccountEventType, InvestmentEventType } from '@prisma/client';
 import { HttpException, HttpStatus } from '../../helpers';
 import { IAccountRepository } from './interfaces/account.repository.interface';
 import {
@@ -7,6 +7,8 @@ import {
   IDepositOutput,
   IGetByIdInput,
   IGetByIdOutput,
+  IGetEventsInput,
+  IGetEventsOutput,
   IGetInvestmentEventsInput,
   IGetInvestmentEventsOutput,
   IGetInvestmentsInput,
@@ -18,6 +20,31 @@ import { AccountValidator } from './validator/account-validator';
 
 export class AccountService implements IAccountService {
   constructor(private accountRepository: IAccountRepository) {}
+  public async getEvents(data: IGetEventsInput): Promise<IGetEventsOutput[]> {
+    const { accountId, limit, offset } = data;
+    await AccountValidator.getEvents({ accountId, limit, offset });
+
+    const account = await this.accountRepository.getById({ id: accountId });
+
+    if (!account) {
+      throw new HttpException('Account not found', HttpStatus.NOT_FOUND);
+    }
+
+    const events = await this.accountRepository.getEvents({
+      accountId,
+      limit,
+      offset,
+    });
+
+    const formatedOutput = events.map((event) => ({
+      accountId: event.accountId,
+      value: event.value,
+      eventType: event.accountEventType || event.investmentEventType,
+      createdAt: event.createdAt,
+    }));
+    return formatedOutput;
+  }
+
   public async getInvestmentEvents(
     data: IGetInvestmentEventsInput,
   ): Promise<IGetInvestmentEventsOutput[]> {

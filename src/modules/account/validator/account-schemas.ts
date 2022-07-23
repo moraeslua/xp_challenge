@@ -69,3 +69,23 @@ export class GetInvestmentEventsSchema {
   @IsInt()
   offset: number;
 }
+
+export class GetEventsSchema {
+  constructor({ accountId, limit, offset }) {
+    this.accountId = accountId;
+    this.limit = limit;
+    this.offset = offset;
+  }
+
+  @IsNotEmpty()
+  @IsInt()
+  accountId: number;
+
+  @IsNotEmpty()
+  @IsInt()
+  limit: number;
+
+  @IsNotEmpty()
+  @IsInt()
+  offset: number;
+}

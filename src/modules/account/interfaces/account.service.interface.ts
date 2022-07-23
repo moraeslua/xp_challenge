@@ -66,7 +66,22 @@ export interface IGetInvestmentEventsOutput {
   createdAt: Date;
 }
 
+export interface IGetEventsInput {
+  accountId: number;
+  limit: number;
+  offset: number;
+}
+
+export type EventType = InvestmentEventType | AccountEventType;
+
+export interface IGetEventsOutput {
+  accountId: number;
+  value: number;
+  eventType: EventType;
+}
+
 export interface IAccountService {
+  getEvents(data: IGetEventsInput): Promise<IGetEventsOutput[]>;
   getInvestmentEvents(
     data: IGetInvestmentEventsInput,
   ): Promise<IGetInvestmentEventsOutput[]>;

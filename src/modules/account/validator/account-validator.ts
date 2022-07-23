@@ -10,6 +10,7 @@ import {
 import {
   DepositOnAccountSchema,
   GetByIdSchema,
+  GetEventsSchema,
   GetInvestmentEventsSchema,
   GetInvestmentsSchema,
   WithdrawFromAccountSchema,
@@ -58,6 +59,16 @@ export class AccountValidator {
     offset,
   }: IGetInvestmentEventsInput): Promise<void> {
     const inputs = new GetInvestmentEventsSchema({ accountId, limit, offset });
+
+    await this.execute(inputs);
+  }
+
+  static async getEvents({
+    accountId,
+    limit,
+    offset,
+  }: IGetInvestmentEventsInput): Promise<void> {
+    const inputs = new GetEventsSchema({ accountId, limit, offset });
 
     await this.execute(inputs);
   }
