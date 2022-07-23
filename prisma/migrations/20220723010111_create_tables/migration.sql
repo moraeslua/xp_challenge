@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "InvestmentEventType" AS ENUM ('BUY', 'SELL');
+CREATE TYPE "InvestmentEventType" AS ENUM ('BUY_STOCK', 'SELL_STOCK');
 
 -- CreateEnum
 CREATE TYPE "AccountEventType" AS ENUM ('WITHDRAW', 'DEPOSIT');
