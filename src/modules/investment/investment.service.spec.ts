@@ -58,7 +58,7 @@ describe('Investment Service tests', () => {
         assetId: 12,
         price: 30.31,
         amount: 2,
-        type: 'BUY',
+        type: 'BUY_STOCK',
         createdAt: '2022-07-20T17:41:09.211Z',
       });
 
@@ -96,7 +96,7 @@ describe('Investment Service tests', () => {
           amount: 2,
           assetId: 12,
           price: 30.31,
-          type: 'BUY',
+          type: 'BUY_STOCK',
           assetAmount: 56,
           accountBalance: 2929.36,
           totalAmountInvestedbyAccount: 4,
@@ -124,7 +124,7 @@ describe('Investment Service tests', () => {
         expect(result).toHaveProperty('assetId', 12);
         expect(result).toHaveProperty('price', 30.31);
         expect(result).toHaveProperty('amount', 2);
-        expect(result).toHaveProperty('type', 'BUY');
+        expect(result).toHaveProperty('type', 'BUY_STOCK');
         expect(result).toHaveProperty('createdAt', '2022-07-20T17:41:09.211Z');
       });
     });
@@ -222,7 +222,7 @@ describe('Investment Service tests', () => {
         assetId: 12,
         price: 30.31,
         amount: 2,
-        type: 'SELL',
+        type: 'SELL_STOCK',
         createdAt: '2022-07-20T19:29:16.728Z',
       });
 
@@ -268,7 +268,7 @@ describe('Investment Service tests', () => {
           assetId: 12,
           amount: 2,
           price: 30.31,
-          type: 'SELL',
+          type: 'SELL_STOCK',
           assetAmount: 103,
           accountBalance: 2989.98,
           totalAmountInvestedbyAccount: 2,
@@ -290,7 +290,7 @@ describe('Investment Service tests', () => {
         expect(result).toHaveProperty('assetId', 12);
         expect(result).toHaveProperty('price', 30.31);
         expect(result).toHaveProperty('amount', 2);
-        expect(result).toHaveProperty('type', 'SELL');
+        expect(result).toHaveProperty('type', 'SELL_STOCK');
         expect(result).toHaveProperty('createdAt', '2022-07-20T19:29:16.728Z');
       });
     });
@@ -370,7 +370,7 @@ describe('Investment Service tests', () => {
             assetId: 12,
             price: 30.31,
             amount: 2,
-            type: 'SELL',
+            type: 'SELL_STOCK',
             createdAt: '2022-07-20T19:29:16.728Z',
           });
 
