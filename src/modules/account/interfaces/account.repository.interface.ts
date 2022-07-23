@@ -34,11 +34,6 @@ export interface IUpdateBalanceData {
   balance: number;
 }
 
-// export interface IUpdateBalanceResult {
-//   id: number;
-//   value: number; // retorno valor depositado ou saldo?
-// }
-
 export interface IAccountTransactionData {
   accountId: number;
   value: number;
@@ -52,7 +47,6 @@ export interface IAccountTransactionResult {
   value: number;
   type: AccountEventType;
   createdAt: Date;
-  // adicionar saldo do dia
 }
 
 export interface ICreateAccountEventData {
@@ -102,7 +96,22 @@ export interface IGetInvestmentEventsResult {
   createdAt: Date;
 }
 
+export interface IGetEventsData {
+  accountId: number;
+  limit: number;
+  offset: number;
+}
+
+export interface IGetEventsResult {
+  accountId: number;
+  value: number;
+  createdAt: Date;
+  accountEventType: AccountEventType;
+  investmentEventType: InvestmentEventType;
+}
+
 export interface IAccountRepository {
+  getEvents(data: IGetEventsData): Promise<IGetEventsResult[]>;
   getInvestmentEvents(
     data: IGetInvestmentEventsData,
   ): Promise<IGetInvestmentEventsResult[]>;
