@@ -7,3 +7,5 @@ src/coverage
 
 # ENV
 .env
+
+tsconfig.tsbuildinfo

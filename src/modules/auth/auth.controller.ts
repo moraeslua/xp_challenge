@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { HttpStatus } from 'src/helpers';
+import { HttpStatus } from '../../helpers';
 import {
   ISignInRequest,
   ISignUpRequest,

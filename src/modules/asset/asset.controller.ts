@@ -5,7 +5,7 @@ import {
   IGetAllRequest,
   IGetByAssetRequest,
 } from './interfaces/asset.controller.interface';
-import { HttpStatus } from 'src/helpers';
+import { HttpStatus } from '../../helpers';
 
 const LIMIT_DEFAULT_VALUE = 10;
 const OFFSET_DEFAULT_VALUE = 0;

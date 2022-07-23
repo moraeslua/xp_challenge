@@ -1,5 +1,4 @@
-import { HttpStatus } from 'src/helpers';
-import { HttpException } from 'src/helpers/http-exception';
+import { HttpException, HttpStatus } from '../../helpers';
 import { IAssetRepository } from './interfaces/asset.repository.interface';
 import {
   IAssetService,
