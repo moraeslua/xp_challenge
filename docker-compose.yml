@@ -12,6 +12,7 @@ services:
     ports:
       - 3000:3000
     environment:
+      API_URL: ${API_URL}
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
       PORT: ${PORT}

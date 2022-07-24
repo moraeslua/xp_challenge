@@ -40,5 +40,5 @@ export const appRoutes = express.Router();
 
 appRoutes.use('/assets', assetRoutes.routes);
 appRoutes.use('/accounts', accountRoutes.routes);
-appRoutes.use('/investments', investmentRoutes.routes);
+appRoutes.use('/investment', investmentRoutes.routes);
 appRoutes.use('/auth', authRoutes.routes);
