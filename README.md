@@ -1,4 +1,4 @@
-# DESAFIO TÉCNICO XP - BACKEND
+# Desafio Técnico XP | Backend
 
 ## Descrição do projeto
 API RESTful desenvolvida para o processo seletivo da XP inc na área de backend.
@@ -11,31 +11,46 @@ Além disso, o usuário consegue obter todo o seu histórico de movimentação n
 
 * Cadastro de clientes (autenticação JWT).
 * Login (autenticação JWT).
-* Lista de ativos disponíveis pra compra (filtrados por páginação).
+* Lista de ativos disponíveis pra compra (filtrados por paginação).
 * Detalhes de um ativo disponível específico.
-* Investir uma ação.
+* Investir em uma ação.
 * Vender uma ação.
-* Histórico de investimentos do cliente (filtrados por páginação).
+* Histórico de investimentos do cliente (filtrados por paginação).
 * Realizar saque
 * Realizar depósito
-* Histórico (extrato) de todas as movimentações do cliente em sua conta (filtrados por páginação).
+* Histórico (extrato) de todas as movimentações do cliente em sua conta (filtrados por paginação).
 
 ## Para rodar em sua máquina
 
 ### Pré-requisitos gerais
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) e um editor de código como [VSCode](https://code.visualstudio.com/).
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
 
 <details>
-  <summary><strong> 🐳 Rodando no Docker </strong></summary><br />
-  - 🚧  Em construção...  🚧
+  <summary><strong> 🐳 Rodando no Docker </strong></summary><br/> 
+   <h3>Pré-requisitos</h3>
+   
+   - Antes de clonar o repositório, você precisa ter o [Docker](https://www.docker.com/) instalado em sua máquina.  
+  ---
+  
+  - Clone o repositório com `git clone git@github.com:moraeslua/xp_challenge.git`
+  
+  - Entre no diretório que acabou de ser criado `cd xp_challenge`
+  
+  - Rode o docker compose `docker-compose up -d`
+  
+  - Entre no container chamado **xp_challenge** `docker exec -it xp_challenge /bin/sh`
+  
+  - Rode o comando para executar as migrations e seeders do banco `npx prisma migrate dev`
+  
+  - Agora é só fazer as requisições com um API Client como [Insomnia](https://insomnia.rest/) ou [Postman](https://www.postman.com/), por exemplo.
+  
 
 </details>
 
 <details>
-  <summary><strong> :computer: Rodando localmente </strong></summary><br />
-    
+  <summary><strong> :computer: Rodando localmente </strong></summary><br />    
    <h3>Pré-requisitos</h3>
    
    - Antes de clonar o repositório, você precisa ter o [PostgreSQL](https://www.postgresql.org/) instalado em sua máquina.  
@@ -63,30 +78,30 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
     - DATABASE_URL=postgresql://my_user:my_pass@localhost:5432/xp_challenge_db?schema=public
     - PORT=3000
   
-  - Rode o comando para executar as migrations do banco `npx prisma migrate dev`
-    
-  - Rode o comando para executar os seeders `npx prisma db seed`
+  - Rode o comando para executar as migrations e seeders do banco `npx prisma migrate dev`
   
-  - Por fim, rode o comando para subir o servidor localmente na porta que você escolheu `npm run dev`
+  - Rode o comando para subir o servidor localmente na porta que você escolheu `npm start`
+  
+  - Agora é só fazer as requisições com um API Client como [Insomnia](https://insomnia.rest/) ou [Postman](https://www.postman.com/), por exemplo.
       
 </details>
 
 <details>
   <summary><strong> :page_with_curl: Lista de comandos </strong></summary><br />
   
-  1. Para rodar o servidor na porta determinada:
+  - Para rodar o servidor na porta determinada:
     `npm run dev`
-  2. Para executar migrations:
+  - Para executar migrations e seeders:
     `npx prisma migrate dev`
-  3. Para executar seeders:
+  - Para executar seeders:
     `npx prisma db seed`
-  4. Para restaurar banco de dados:
+  - Para restaurar banco de dados:
     `npm run restore`
-  5. Para limpar todas as informações de todas as tabelas do banco de dados:
+  - Para limpar todas as informações de todas as tabelas do banco de dados:
     `npm run truncate`
-  6. Para executar os testes unitários:
+  - Para executar os testes unitários:
     `npm run test`
-  7. Para executar a cobertura de testes:
+  - Para executar a cobertura de testes:
     `npm run test:cov`
 
 </details>
@@ -103,6 +118,7 @@ As seguintes ferramentas foram usadas no desenvolvimento do projeto:
 - [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Ts-jest](https://kulshekhar.github.io/ts-jest/)
+- [Docker](https://www.docker.com/)
 
 ## Sobre o desenvolvimento
   Para armazenar e lidar com dados:

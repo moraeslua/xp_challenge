@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    container_name: xp_challenge
+    restart: always
+    volumes:  
+      - ./:/usr/app
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    environment:
+      DATABASE_URL: postgresql://postgres:1234@db:5432/xp_challenge_db?schema=public
+      JWT_SECRET: superjwtsecret
+      PORT: 3000
+  db:
+    container_name: xp_challenge_db
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 1234
+
+networks:
+  default:
+    name: xp_challenge_net
