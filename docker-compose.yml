@@ -5,8 +5,6 @@ services:
     build: .
     container_name: xp_challenge
     restart: always
-    volumes:  
-      - ./:/usr/app
     depends_on:
       - db
     ports:

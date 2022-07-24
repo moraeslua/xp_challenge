@@ -29,6 +29,7 @@
     "seed": "ts-node src/scripts/seeders/seeder.ts"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.6",
@@ -52,7 +53,6 @@
   },
   "dependencies": {
     "@prisma/client": "^4.0.0",
-    "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.2",
     "cors": "^2.8.5",
