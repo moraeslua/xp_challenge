@@ -12,9 +12,9 @@ services:
     ports:
       - 3000:3000
     environment:
-      DATABASE_URL: postgresql://postgres:1234@db:5432/xp_challenge_db?schema=public
-      JWT_SECRET: superjwtsecret
-      PORT: 3000
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: ${PORT}
   db:
     container_name: xp_challenge_db
     image: postgres:alpine
@@ -22,7 +22,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
 networks:
   default:

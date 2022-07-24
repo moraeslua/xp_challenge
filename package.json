@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:migrate:prod": "npx prisma migrate deploy && node dist/scripts/seeders/seeder.js && npm run start",
     "start": "node dist/main.js",
     "build": "tsc",
     "test:cov": "jest --coverage",

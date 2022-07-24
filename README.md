@@ -38,9 +38,15 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
   
   - Entre no diretório que acabou de ser criado `cd xp_challenge`
   
-  - Rode o docker compose `docker-compose up -d`
-  
   - Entre no container chamado **xp_challenge** `docker exec -it xp_challenge /bin/sh`
+  
+  - Configure as variaveis de ambiente descritas no .env.example:
+    1. Configure a porta exposta no Dockerfile `PORT=3000`
+    2. Configure seu segredo JWT, exemplo: `JWT_SECRET=seusegredo`
+    3. Configure seu postgres password, exemplo: `POSTGRES_PASSWORD=1234`
+    4. Configure o databse url para se conectar ao banco: `DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/xp_challenge_db?schema=public`
+    
+  - Rode o docker compose `docker-compose up -d`
   
   - Rode o comando para executar as migrations e seeders do banco `npx prisma migrate dev`
   
@@ -63,7 +69,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
    - Crie um novo usuário `CREATE USER my_user WITH ENCRYPTED PASSWORD 'my_pass';`
    - Conceda privilégios desse novo usuário para se conectar a **xp_challenge_db** 
      `GRANT ALL PRIVILEGES ON DATABASE "xp_challenge_db" to my_user; `
-   - Dê permissões para seu novo usuário poder criar banco de dados: `ALTER USER my_user CREATEDB;`
+   - Dê permissões para seu novo usuário poder criar bancos de dados: `ALTER USER my_user CREATEDB;`
    
   ---
   
@@ -74,9 +80,9 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
   - Instale as dependências com `npm install`
   
   - Agora, você precisa configurar as variaveis de ambiente de acordo com o .env.example:
-    - JWT_SECRET=seu segredo super secreto
-    - DATABASE_URL=postgresql://my_user:my_pass@localhost:5432/xp_challenge_db?schema=public
-    - PORT=3000
+    1. `JWT_SECRET=seusegredo`
+    2. `DATABASE_URL=postgresql://my_user:my_pass@localhost:5432/xp_challenge_db?schema=public`
+    3. `PORT=3000`
   
   - Rode o comando para executar as migrations e seeders do banco `npx prisma migrate dev`
   
