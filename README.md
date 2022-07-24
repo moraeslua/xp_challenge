@@ -23,6 +23,8 @@ Além disso, o usuário consegue obter todo o seu histórico de movimentação n
 ## Deploy
 - Link da documentação feita com [Swagger](https://swagger.io/) e deploy no [Heroku](https://www.heroku.com/platform): [documentação](https://xp-challenge-deploy.herokuapp.com/api-docs/)
 
+- **importante**: para conseguir navegar pelas rotas que precisam de autenticação JWT, coloque o token enviado no campo disponibilizado por '"Authorize"
+
 ## Para rodar em sua máquina
 
 ### Pré-requisitos gerais
