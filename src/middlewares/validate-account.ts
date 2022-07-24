@@ -5,8 +5,7 @@ import { IAccountPayload } from '../types/express';
 
 export class ValidateAccount {
   public execute = async (req: Request, res: Response, next: NextFunction) => {
-    //
-    const token = req.headers.authorization;
+    const token = req.headers.authorization.split('Bearer ')[1];
 
     if (!token) {
       return res

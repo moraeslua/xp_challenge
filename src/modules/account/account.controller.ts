@@ -33,16 +33,20 @@ export class AccountController {
     req: Request,
     res: Response,
   ): Promise<Response> => {
-    const { id, value } = req.body as IWithdrawRequest;
+    const { value } = req.body as Pick<IWithdrawRequest, 'value'>;
+    const { id } = req.params as unknown as Pick<IWithdrawRequest, 'id'>;
 
-    if (res.locals.account.id !== id) {
+    const accountId = Number(id);
+
+    if (res.locals.account.id !== accountId) {
       return res.status(HttpStatus.UNAUTHORIZED).end();
     }
 
     const response = await this.accountService.withdrawFromAccount({
-      id,
+      id: accountId,
       value,
     });
+
     return res.status(HttpStatus.CREATED).json(response);
   };
 
@@ -50,13 +54,20 @@ export class AccountController {
     req: Request,
     res: Response,
   ): Promise<Response> => {
-    const { id, value } = req.body as IDepositRequest;
+    const { value } = req.body as Pick<IDepositRequest, 'value'>;
+    const { id } = req.params as unknown as Pick<IDepositRequest, 'id'>;
 
-    if (res.locals.account?.id !== id) {
+    const accountId = Number(id);
+
+    if (res.locals.account?.id !== accountId) {
       return res.status(HttpStatus.UNAUTHORIZED).end();
     }
 
-    const response = await this.accountService.depositOnAccount({ id, value });
+    const response = await this.accountService.depositOnAccount({
+      id: accountId,
+      value,
+    });
+
     return res.status(HttpStatus.CREATED).json(response);
   };
 
