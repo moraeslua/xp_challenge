@@ -20,6 +20,9 @@ Além disso, o usuário consegue obter todo o seu histórico de movimentação n
 * Realizar depósito
 * Histórico (extrato) de todas as movimentações do cliente em sua conta (filtrados por paginação).
 
+## Deploy
+- Link para deploy com Heroku: [Deploy](https://xp-challenge-deploy.herokuapp.com/assets)
+
 ## Para rodar em sua máquina
 
 ### Pré-requisitos gerais
