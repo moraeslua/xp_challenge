@@ -21,7 +21,7 @@ Além disso, o usuário consegue obter todo o seu histórico de movimentação n
 * Histórico (extrato) de todas as movimentações do cliente em sua conta (filtrados por paginação).
 
 ## Deploy
-- Link para deploy com Heroku: [Deploy](https://xp-challenge-deploy.herokuapp.com/assets)
+- Link da documentação feita com [Swagger](https://swagger.io/) e deploy no [Heroku](https://www.heroku.com/platform): [documentação](https://xp-challenge-deploy.herokuapp.com/api-docs/)
 
 ## Para rodar em sua máquina
 
